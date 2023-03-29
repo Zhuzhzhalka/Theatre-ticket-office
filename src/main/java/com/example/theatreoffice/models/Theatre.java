@@ -15,9 +15,6 @@ public class Theatre {
 	@NonNull
 	private String name;
 	
-	@OneToOne(targetEntity = Location.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Location location;
-	
 	@Column(name = "seats_ground_floor")
 	private int seatsGroundFloor;
 	
@@ -26,15 +23,31 @@ public class Theatre {
 	
 	@Column(name = "seats_mezzanine")
 	private int seatsMezzanine;
+
+	@Column(name ="building")
+	private int building;
+
+	@Column(name ="street")
+	private String street;
+
+	@Column(name ="town")
+	private String town;
+
+	@Column(name ="country")
+	private String country;
 	
 	public Theatre() {}
 	
-	public Theatre(String name, Location location, int seatsGroundFloor, int seatsBalcony, int seatsMezzanine) {
+	public Theatre(String name, int seatsGroundFloor, int seatsBalcony, int seatsMezzanine,
+				   int building, String street, String town, String country) {
 		this.name = name;
-		this.location = location;
 		this.seatsGroundFloor = seatsGroundFloor;
 		this.seatsBalcony = seatsBalcony;
 		this.seatsMezzanine = seatsMezzanine;
+		this.building = building;
+		this.street = street;
+		this.town = town;
+		this.country = country;
 	}
 
 	public long getId() {
@@ -51,14 +64,6 @@ public class Theatre {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Location getLocation() {
-		return location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
 	}
 
 	public long getSeatsGroundFloor() {
@@ -83,6 +88,38 @@ public class Theatre {
 
 	public void setSeatsMezzanine(int seatsMezzanine) {
 		this.seatsMezzanine = seatsMezzanine;
+	}
+
+	public int getBuilding() {
+		return building;
+	}
+
+	public void setBuilding(int building) {
+		this.building = building;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getTown() {
+		return town;
+	}
+
+	public void setTown(String town) {
+		this.town = town;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 }

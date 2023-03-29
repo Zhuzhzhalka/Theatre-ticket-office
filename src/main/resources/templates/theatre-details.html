@@ -11,10 +11,10 @@
 <div class="container" mt-5>
     <div th:each="el : ${theatre}" class="alert alert-info mt-2">
         <h3 th:text="${el.getName()}"/>
-        <p th:text="'дом: ' + ${el.getLocation().getBuilding()}"/>
-        <p th:text="'улица: ' + ${el.getLocation().getStreet()}"/>
-        <p th:text="'город: ' + ${el.getLocation().getTown()}"/>
-        <p th:text="'страна: ' + ${el.getLocation().getCountry}"/>
+        <p th:text="'дом: ' + ${el.getBuilding()}"/>
+        <p th:text="'улица: ' + ${el.getStreet()}"/>
+        <p th:text="'город: ' + ${el.getTown()}"/>
+        <p th:text="'страна: ' + ${el.getCountry}"/>
         <p th:text="'Партер: ' + ${el.getSeatsGroundFloor()}"/>
         <p th:text="'Балкон: ' + ${el.getSeatsBalcony()}"/>
         <p th:text="'Бельэтаж: ' + ${el.getSeatsMezzanine()}"/>

@@ -1,20 +1,14 @@
-DROP TABLE IF EXISTS location CASCADE;
-CREATE TABLE location (
-                          id SERIAL PRIMARY KEY,
-                          building TEXT,
-                          street TEXT,
-                          town TEXT,
-                          country TEXT
-);
-
 DROP TABLE IF EXISTS theatre CASCADE;
 CREATE TABLE theatre (
                           id SERIAL PRIMARY KEY,
                           name TEXT,
-                          location_id INTEGER REFERENCES location ON DELETE CASCADE,
                           seats_ground_floor INTEGER,
                           seats_balcony INTEGER,
-                          seats_mezzanine INTEGER
+                          seats_mezzanine INTEGER,
+                          building TEXT,
+                          street TEXT,
+                          town TEXT,
+                          country TEXT
 );
 
 DROP TABLE IF EXISTS schedule CASCADE;

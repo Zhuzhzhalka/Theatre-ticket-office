@@ -1,9 +1,6 @@
 package com.example.theatreoffice.models;
 
-import java.sql.Time;
-import java.time.Duration;
 import java.time.LocalTime;
-import java.util.Date;
 
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;

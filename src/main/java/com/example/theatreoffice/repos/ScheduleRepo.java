@@ -13,4 +13,7 @@ import java.util.List;
 public interface ScheduleRepo extends CrudRepository<Schedule, Long> {
     List<Schedule> findByTheatre(Theatre theatre);
     List<Schedule> findByPerformance(Performance performance);
+    List<Schedule> findByFreeSeatsBalconyGreaterThanEqual(int freeSeatsBalcony);
+    List<Schedule> findByFreeSeatsGroundFloorGreaterThanEqual(int freeSeatsGroundFloor);
+    List<Schedule> findByFreeSeatsMezzanineGreaterThanEqual(int freeSeatsMezzanine);
 }

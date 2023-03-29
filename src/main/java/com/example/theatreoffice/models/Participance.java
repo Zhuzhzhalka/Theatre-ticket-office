@@ -2,8 +2,6 @@ package com.example.theatreoffice.models;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
-
 @Entity
 public class Participance {
 	@Id

@@ -1,9 +1,9 @@
 package com.example.theatreoffice.controllers;
 
+import com.example.theatreoffice.daos.ParticipanceDAO;
+import com.example.theatreoffice.daos.PerformanceDAO;
+import com.example.theatreoffice.daos.ScheduleDAO;
 import com.example.theatreoffice.models.*;
-import com.example.theatreoffice.repos.ParticipanceRepo;
-import com.example.theatreoffice.repos.PerformanceRepo;
-import com.example.theatreoffice.repos.ScheduleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,26 +12,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Time;
-import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class PerformanceController {
     @Autowired
-    PerformanceRepo performanceRepo;
+    private PerformanceDAO performanceDAO;
     @Autowired
-    ScheduleRepo scheduleRepo;
+    private ScheduleDAO scheduleDAO;
     @Autowired
-    ParticipanceRepo participanceRepo;
+    private ParticipanceDAO participanceDAO;
 
     @GetMapping("/performances")
     public String performancesMain(Model model) {
-        Iterable<Performance> performances = performanceRepo.findAll();
+        List<Performance> performances = performanceDAO.getAllPerformances();
         model.addAttribute("performances", performances);
         return "performances-main";
     }
@@ -48,29 +45,27 @@ public class PerformanceController {
         LocalTime duration = LocalTime.parse(durationString);
         double rating = Double.parseDouble(ratingString);
         Performance performance = new Performance(title, duration, genre, rating, director_id);
-        performanceRepo.save(performance);
+        performanceDAO.save(performance);
 
         return "redirect:/performances";
     }
 
     @GetMapping("/performances/{id}")
     public String performanceDetails(@PathVariable(value = "id") long id, Model model) {
-        if (!(performanceRepo.existsById(id))) {
+        Optional<Performance> performanceOpt = performanceDAO.getPerformanceById(id);
+        if (performanceOpt.isEmpty()) {
             return "redirect:/performances";
         }
+        Performance performance = performanceOpt.get();
 
-        Optional<Performance> performance = performanceRepo.findById(id);
-        ArrayList<Performance> res = new ArrayList<>();
-        performance.ifPresent(res::add);
-
-        List<Schedule> schedule = scheduleRepo.findByPerformance(res.get(0));
-        List<Participance> participances = participanceRepo.findByPerformance(res.get(0));
+        List<Schedule> schedule = scheduleDAO.getScheduleByPerformance(performance);
+        List<Participance> participances = participanceDAO.getParticipancesByPerformance(performance);
         ArrayList<Participant> participants = new ArrayList<>();
         for (Participance participance : participances) {
             participants.add(participance.getParticipant());
         }
 
-        model.addAttribute("performance", res);
+        model.addAttribute("performance", performance);
         model.addAttribute("schedule", schedule);
         model.addAttribute("participants", participants);
         return "performance-details";
@@ -78,15 +73,13 @@ public class PerformanceController {
 
     @GetMapping("/performances/{id}/edit")
     public String performanceEdit(@PathVariable(value = "id") long id, Model model) {
-        if (!(performanceRepo.existsById(id))) {
+        Optional<Performance> performanceOpt = performanceDAO.getPerformanceById(id);
+        if (performanceOpt.isEmpty()) {
             return "redirect:/performances";
         }
+        Performance performance = performanceOpt.get();
 
-        Optional<Performance> performance = performanceRepo.findById(id);
-        ArrayList<Performance> res = new ArrayList<>();
-        performance.ifPresent(res::add);
-
-        model.addAttribute("performance", res);
+        model.addAttribute("performance", performance);
         return "performance-edit";
     }
 
@@ -95,8 +88,7 @@ public class PerformanceController {
                                     @RequestParam String title, @RequestParam String durationString,
                                     @RequestParam String genre, @RequestParam double rating,
                                     @RequestParam Participant director_id, Model model) {
-        Performance performance = performanceRepo.findById(id).orElseThrow();
-
+        Performance performance = performanceDAO.getPerformanceById(id).orElseThrow();
         LocalTime duration = LocalTime.parse(durationString);
 
         performance.setTitle(title);
@@ -104,15 +96,15 @@ public class PerformanceController {
         performance.setGenre(genre);
         performance.setRating(rating);
         performance.setDirector(director_id);
-        performanceRepo.save(performance);
+        performanceDAO.save(performance);
 
         return "redirect:/performances/{id}";
     }
 
     @PostMapping("/performances/{id}/remove")
     public String performanceRemove(@PathVariable(value = "id") long id, Model model) {
-        Performance performance = performanceRepo.findById(id).orElseThrow();
-        performanceRepo.delete(performance);
+        Performance performance = performanceDAO.getPerformanceById(id).orElseThrow();
+        performanceDAO.delete(performance);
 
         return "redirect:/performances";
     }

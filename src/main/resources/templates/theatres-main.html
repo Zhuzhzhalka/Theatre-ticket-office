@@ -13,10 +13,10 @@
 	<a th:href="'/theatres/add'" class="btn btn-warning">Добавить театр</a>
 	<div th:each="el : ${theatres}" class="alert alert-info mt-2">
 		<h3 th:text="${el.getName()}"/>
-		<p th:text="'дом: ' + ${el.getLocation().getBuilding()}"/>
-		<p th:text="'улица: ' + ${el.getLocation().getStreet()}"/>
-		<p th:text="'город: ' + ${el.getLocation().getTown()}"/>
-		<p th:text="'страна: ' + ${el.getLocation().getCountry}"/>
+		<p th:text="'дом: ' + ${el.getBuilding()}"/>
+		<p th:text="'улица: ' + ${el.getStreet()}"/>
+		<p th:text="'город: ' + ${el.getTown()}"/>
+		<p th:text="'страна: ' + ${el.getCountry}"/>
 		<a th:href="'/theatres/' + ${el.getId()}" class="btn btn-warning">Детали</a>
 	</div>
 </div>
