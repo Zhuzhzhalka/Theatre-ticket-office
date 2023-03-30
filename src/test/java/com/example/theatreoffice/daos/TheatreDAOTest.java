@@ -101,6 +101,24 @@ public class TheatreDAOTest {
 
         theatreDAO.delete(theatre1);
         theatreDAO.delete(theatre2);
+
+        theatre1 = new Theatre("Луч", 25, 26, 5, 7, "Советская", "Ереван", "Армения");
+        theatre2 = new Theatre("Любимый", 78, 65, 25, 8, "Красная", "Ереван", "Армения");
+
+        List<Theatre> theatresExpectedAgain = new ArrayList<>();
+        theatresExpectedAgain.add(theatre1);
+        theatresExpectedAgain.add(theatre2);
+
+        theatreDAO.save(theatre1);
+        theatreDAO.save(theatre2);
+
+        theatresGot = theatreDAO.getTheatresByLocation("Ереван", "");
+        Assertions.assertEquals(theatresExpectedAgain, theatresGot);
+        theatresGot = theatreDAO.getTheatresByLocation("", "Армения");
+        Assertions.assertEquals(theatresExpectedAgain, theatresGot);
+
+        theatreDAO.delete(theatre1);
+        theatreDAO.delete(theatre2);
     }
 
 }

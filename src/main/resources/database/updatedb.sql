@@ -10,7 +10,8 @@ INSERT INTO schedule VALUES
 
 INSERT INTO participant VALUES
     (1, 'Чернов', 'Василий'),
-    (2, 'Безруков', 'Сергей');
+    (2, 'Безруков', 'Сергей'),
+    (3, 'Алексеев', 'Петр');
 
 INSERT INTO performance VALUES
     (1, 'Мурзилка', '01:00', 'Спектакль', 7.5, 1),

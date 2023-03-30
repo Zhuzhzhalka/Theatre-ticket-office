@@ -95,12 +95,51 @@ public class PerformanceDAOTest {
 
     @Test
     public void TestGetPerformancesOrderedByRating() {
-        List<Performance> performancesExpected = new ArrayList<>();
-        performancesExpected.add(performanceDAO.getPerformanceById(3).orElseThrow());
-        performancesExpected.add(performanceDAO.getPerformanceById(2).orElseThrow());
-        performancesExpected.add(performanceDAO.getPerformanceById(1).orElseThrow());
+        List<Performance> performancesExpected1 = new ArrayList<>();
+        performancesExpected1.add(performanceDAO.getPerformanceById(3).orElseThrow());
+        performancesExpected1.add(performanceDAO.getPerformanceById(2).orElseThrow());
+        performancesExpected1.add(performanceDAO.getPerformanceById(1).orElseThrow());
 
-        List<Performance> performancesGot = performanceDAO.getPerformancesOrderedByRating(true);
+        List<Performance> performancesGot1 = performanceDAO.getPerformancesOrderedByRating(true);
+        Assertions.assertEquals(performancesExpected1, performancesGot1);
+
+        List<Performance> performancesExpected2 = new ArrayList<>();
+        performancesExpected2.add(performanceDAO.getPerformanceById(1).orElseThrow());
+        performancesExpected2.add(performanceDAO.getPerformanceById(2).orElseThrow());
+        performancesExpected2.add(performanceDAO.getPerformanceById(3).orElseThrow());
+
+        List<Performance> performancesGot2 = performanceDAO.getPerformancesOrderedByRating(false);
+        Assertions.assertEquals(performancesExpected2, performancesGot2);
+    }
+
+    @Test
+    public void testGetPerformanceById() {
+        LocalTime duration = LocalTime.parse("01:00:00");
+        Optional<Participant> directorOpt = participantDAO.getParticipantById(1);
+        Assertions.assertTrue(directorOpt.isPresent());
+        Participant director = directorOpt.get();
+        Performance performanceExpected = new Performance("Три богатыря", duration, "Опера", 9.1, director);
+        performanceDAO.save(performanceExpected);
+
+        Optional<Performance> somethingGot = performanceDAO.getPerformanceById(performanceExpected.getId());
+        Assertions.assertTrue(somethingGot.isPresent());
+        Performance performanceGot = somethingGot.get();
+        Assertions.assertEquals(performanceExpected, performanceGot);
+        performanceDAO.delete(performanceExpected);
+    }
+
+    @Test
+    public void testGetAllPerformances() {
+        Performance performance1 = performanceDAO.getPerformanceById(1).orElseThrow();
+        Performance performance2 = performanceDAO.getPerformanceById(2).orElseThrow();
+        Performance performance3 = performanceDAO.getPerformanceById(3).orElseThrow();
+
+        List<Performance> performancesExpected = new ArrayList<>();
+        performancesExpected.add(performance1);
+        performancesExpected.add(performance2);
+        performancesExpected.add(performance3);
+
+        List<Performance> performancesGot = performanceDAO.getAllPerformances();
         Assertions.assertEquals(performancesExpected, performancesGot);
     }
 }

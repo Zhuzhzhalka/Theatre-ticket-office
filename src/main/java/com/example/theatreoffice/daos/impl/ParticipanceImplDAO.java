@@ -31,4 +31,14 @@ public class ParticipanceImplDAO implements ParticipanceDAO {
         Optional<Participance> participance = participanceRepo.findByPerformanceAndParticipant(performance, participant);
         return participance.map(Participance::getRole);
     }
+
+    @Override
+    public Participance save(Participance participance) {
+        return participanceRepo.save(participance);
+    }
+
+    @Override
+    public void delete(Participance participance) {
+        participanceRepo.delete(participance);
+    }
 }

@@ -11,4 +11,6 @@ public interface ParticipanceDAO {
     List<Participance> getParticipancesByPerformance(Performance performance);
     List<Participance> getParticipancesByParticipant(Participant participant);
     Optional<String> participantRoleInPerformance(Participant participant, Performance performance);
+    Participance save(Participance participance);
+    void delete(Participance participance);
 }
