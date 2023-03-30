@@ -1,6 +1,5 @@
 package com.example.theatreoffice.daos;
 
-import com.example.theatreoffice.daos.impl.ScheduleImplDAO;
 import com.example.theatreoffice.daos.impl.TheatreImplDAO;
 import com.example.theatreoffice.models.Theatre;
 import org.junit.jupiter.api.Assertions;
@@ -26,17 +25,10 @@ public class TheatreDAOTest {
             return new TheatreImplDAO();
         }
 
-        @Bean
-        public ScheduleDAO scheduleDAO() {
-            return new ScheduleImplDAO();
-        }
     }
 
     @Autowired
     private TheatreDAO theatreDAO;
-
-    @Autowired
-    private ScheduleDAO scheduleDAO;
 
     @Test
     public void testGetTheatresByName() {

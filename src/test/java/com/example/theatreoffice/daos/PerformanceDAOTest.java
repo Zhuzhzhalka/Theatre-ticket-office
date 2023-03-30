@@ -2,8 +2,6 @@ package com.example.theatreoffice.daos;
 
 import com.example.theatreoffice.daos.impl.ParticipantImplDAO;
 import com.example.theatreoffice.daos.impl.PerformanceImplDAO;
-import com.example.theatreoffice.daos.impl.ScheduleImplDAO;
-import com.example.theatreoffice.daos.impl.TheatreImplDAO;
 import com.example.theatreoffice.models.Participant;
 import com.example.theatreoffice.models.Performance;
 import org.junit.jupiter.api.Assertions;
@@ -32,11 +30,6 @@ public class PerformanceDAOTest {
         }
 
         @Bean
-        public ScheduleDAO scheduleDAO() {
-            return new ScheduleImplDAO();
-        }
-
-        @Bean
         public ParticipantDAO participantDAO() {
             return new ParticipantImplDAO();
         }
@@ -44,9 +37,6 @@ public class PerformanceDAOTest {
 
     @Autowired
     private PerformanceDAO performanceDAO;
-
-    @Autowired
-    private ScheduleDAO scheduleDAO;
 
     @Autowired
     private ParticipantDAO participantDAO;

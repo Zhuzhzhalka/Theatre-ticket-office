@@ -1,6 +1,7 @@
 package com.example.theatreoffice.controllers;
 
 import com.example.theatreoffice.daos.ParticipanceDAO;
+import com.example.theatreoffice.daos.ParticipantDAO;
 import com.example.theatreoffice.daos.PerformanceDAO;
 import com.example.theatreoffice.daos.ScheduleDAO;
 import com.example.theatreoffice.models.*;
@@ -25,6 +26,8 @@ public class PerformanceController {
     private ScheduleDAO scheduleDAO;
     @Autowired
     private ParticipanceDAO participanceDAO;
+    @Autowired
+    private ParticipantDAO participantDAO;
 
     @GetMapping("/performances")
     public String performancesMain(Model model) {
@@ -41,10 +44,17 @@ public class PerformanceController {
     @PostMapping("/performances/add")
     public String performancesAdd(@RequestParam String title, @RequestParam String durationString,
                                   @RequestParam String genre, @RequestParam String ratingString,
-                                  @RequestParam Participant director_id, Model model) {
+                                  @RequestParam String directorFirstName, @RequestParam String directorLastName,
+                                  Model model) {
         LocalTime duration = LocalTime.parse(durationString);
         double rating = Double.parseDouble(ratingString);
-        Performance performance = new Performance(title, duration, genre, rating, director_id);
+        Optional<Participant> directorOpt = participantDAO.getParticipantByFirstNameAndLastName(directorFirstName, directorLastName);
+        if (directorOpt.isEmpty()) {
+            // TODO: implement new participant (director) addition to Participant table
+            return "redirect:/performances";
+        }
+        Participant director = directorOpt.get();
+        Performance performance = new Performance(title, duration, genre, rating, director);
         performanceDAO.save(performance);
 
         return "redirect:/performances";
