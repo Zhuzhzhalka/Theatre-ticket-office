@@ -66,7 +66,7 @@ public class Theatre {
 		this.name = name;
 	}
 
-	public long getSeatsGroundFloor() {
+	public int getSeatsGroundFloor() {
 		return seatsGroundFloor;
 	}
 
@@ -74,7 +74,7 @@ public class Theatre {
 		this.seatsGroundFloor = seatsGroundFloor;
 	}
 
-	public long getSeatsBalcony() {
+	public int getSeatsBalcony() {
 		return seatsBalcony;
 	}
 
@@ -82,7 +82,7 @@ public class Theatre {
 		this.seatsBalcony = seatsBalcony;
 	}
 
-	public long getSeatsMezzanine() {
+	public int getSeatsMezzanine() {
 		return seatsMezzanine;
 	}
 

@@ -1,6 +1,7 @@
 package com.example.theatreoffice.daos.impl;
 
 import com.example.theatreoffice.daos.PerformanceDAO;
+import com.example.theatreoffice.models.Participant;
 import com.example.theatreoffice.models.Performance;
 import com.example.theatreoffice.repos.PerformanceRepo;
 import org.apache.commons.collections4.IterableUtils;
@@ -32,8 +33,8 @@ public class PerformanceImplDAO implements PerformanceDAO {
     }
 
     @Override
-    public List<Performance> getPerformancesByGenres(Collection<String> genres) {
-        return performanceRepo.findByGenreIn(genres);
+    public List<Performance> getPerformancesByGenre(String genre) {
+        return performanceRepo.findByGenre(genre);
     }
 
     @Override
@@ -42,6 +43,16 @@ public class PerformanceImplDAO implements PerformanceDAO {
             return performanceRepo.findAllByOrderByRatingDesc();
         }
         return performanceRepo.findAllByOrderByRatingAsc();
+    }
+
+    @Override
+    public List<Performance> getPerformancesByTitleAndGenre(String title, String genre) {
+        return performanceRepo.findByTitleAndGenre(title, genre);
+    }
+
+    @Override
+    public List<Performance> getPerformancesByDirector(Participant director) {
+        return performanceRepo.findByDirector(director);
     }
 
     @Override

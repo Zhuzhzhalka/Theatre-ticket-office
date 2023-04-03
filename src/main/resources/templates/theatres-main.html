@@ -10,6 +10,15 @@
 
 <div class="container" mt-5>
 	<h1>Список театров</h1>
+	<form th:action="@{/theatres}" th:object="${filter}" method="post">
+		<p>Сортировка</p>
+		<div class="col-md-6 form-group">
+			<input th:type="text" th:field="*{performanceTitleSearched}" th:name="performanceTitleSearched" th:placeholder="'Введите название представления'" th:class="form-control">
+			<input th:type="text" th:field="*{directorSearched}" th:name="directorSearched" th:placeholder="'Введите фамилию и имя режиссера'" th:class="form-control">
+			<input th:type="text" th:field="*{actorSearched}" th:name="actorSearched" th:placeholder="'Введите фамилию и имя артиста'" th:class="form-control">
+		</div>
+		<p><input th:type="submit" th:value="Submit" /> <input th:type="reset" th:value="Reset" /></p>
+	</form>
 	<a th:href="'/theatres/add'" class="btn btn-warning">Добавить театр</a>
 	<div th:each="el : ${theatres}" class="alert alert-info mt-2">
 		<h3 th:text="${el.getName()}"/>

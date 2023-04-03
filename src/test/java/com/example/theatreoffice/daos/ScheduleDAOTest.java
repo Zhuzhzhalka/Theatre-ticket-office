@@ -15,6 +15,8 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,7 +82,7 @@ public class ScheduleDAOTest {
     public void testGetScheduleById() {
         Performance performance = performanceDAO.getPerformanceById(2).orElseThrow();
         Theatre theatre = theatreDAO.getTheatreById(1).orElseThrow();
-        Date dateTime = Date.from(Instant.now());
+        LocalDateTime dateTime = LocalDateTime.parse("2020-10-13T20:00:00");
         Schedule scheduleExpected = new Schedule(performance, theatre, dateTime, 50, 20, 10, 500, 1000, 2000);
         scheduleDAO.save(scheduleExpected);
 

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TicketDAO {
+    Optional<Ticket> getTicketById(long id);
     List<Ticket> getTicketsBySchedule(Schedule schedule);
     List<Ticket> getTicketsByPerson(String firstName, String lastName);
     Optional<Ticket> getTicketBySeatAndSchedule(int seat, Schedule schedule);

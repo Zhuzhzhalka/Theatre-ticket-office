@@ -22,4 +22,14 @@ public class ParticipantImplDAO implements ParticipantDAO {
     public Optional<Participant> getParticipantById(long id) {
         return participantRepo.findById(id);
     }
+
+    @Override
+    public Participant save(Participant participant) {
+        return participantRepo.save(participant);
+    }
+
+    @Override
+    public void delete(Participant participant) {
+        participantRepo.delete(participant);
+    }
 }

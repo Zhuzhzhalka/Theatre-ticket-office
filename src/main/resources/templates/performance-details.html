@@ -15,17 +15,18 @@
         <p th:text="'жанр: ' + ${el.getGenre()}"/>
         <p th:text="'рейтинг: ' + ${el.getRating()}"/>
         <p th:text="'Режиссер: ' + ${el.getDirector().getFirstName()} + ' ' + ${el.getDirector().getLastName()}"/>
-        <a th:href="'/performances/' + ${el.id} + '/edit'" class="btn btn-warning">Редактировать</a>
-        <form th:action="'/performances/' + ${el.id} +'/remove'" method="post">
+        <a th:href="'/performances/' + ${el.getId()} + '/edit'" class="btn btn-warning">Редактировать</a>
+        <form th:action="'/performances/' + ${el.getId()} +'/remove'" method="post">
             <button class="btn btn-warning" type="submit">Удалить</button>
         </form>
+        <a th:href="@{/performances/{perfId}/add_schedule(perfId=${el.getId()} )}" class="btn btn-primary my-2">Добавить расписание</a>
+    </div>
+    <div th:each="el : ${participances}" class="alert alert-info mt-2">
+        <p th:text="${el.getParticipant().getFirstName()} + ' ' + ${el.getParticipant().getLastName()} + ' -- ' + ${el.getRole()}"/>
     </div>
     <div th:each="el : ${schedule}" class="alert alert-info mt-2">
-        <p th:text="'Театр: ' + ${el.getTheatre().getName()} + '; дата: ' + ${el.getDateTime()}"/>
+        <p th:text="'Театр: ' + ${el.getTheatre().getName()} + '; дата: ' + ${el.getDateTime().format(formatter)}"/>
         <a th:href="@{/performances/{perfId}/{schedId}(perfId=${el.getPerformance().getId()}, schedId=${el.getId()} )}" class="btn btn-primary my-2">Билеты</a>
-    </div>
-    <div th:each="el : ${participants}" class="alert alert-info mt-2">
-        <p th:text="'Фамилия: ' + ${el.getFirstName()} + ' Имя: ' + ${el.getLastName()}"/>
     </div>
 </div>
 

@@ -16,6 +16,11 @@ public class TicketImplDAO implements TicketDAO {
     private TicketRepo ticketRepo;
 
     @Override
+    public Optional<Ticket> getTicketById(long id) {
+        return ticketRepo.findById(id);
+    }
+
+    @Override
     public List<Ticket> getTicketsBySchedule(Schedule schedule) {
         return ticketRepo.findBySchedule(schedule);
     }

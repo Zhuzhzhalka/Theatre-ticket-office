@@ -1,8 +1,11 @@
 package com.example.theatreoffice.models;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -22,7 +25,7 @@ public class Schedule {
 	
 	@Column(nullable = false, name = "date_time")
 	@DateTimeFormat(pattern = "yyyy-mm-dd hh-mm")
-	private Date dateTime;
+	private LocalDateTime dateTime;
 	
 	@Column(name = "free_seats_ground_floor")
 	private int freeSeatsGroundFloor;
@@ -44,7 +47,7 @@ public class Schedule {
 	
 	public Schedule() {}
 	
-	public Schedule(Performance performance, Theatre theatre, Date dateTime, int freeSeatsGroundFloor,
+	public Schedule(Performance performance, Theatre theatre, LocalDateTime dateTime, int freeSeatsGroundFloor,
 					int freeSeatsBalcony, int freeSeatsMezzanine, long priceGroundFloor, long priceBalcony,
 					long priceMezzanine) {
 		this.performance = performance;
@@ -82,11 +85,11 @@ public class Schedule {
 		this.theatre = theatre;
 	}
 
-	public Date getDateTime() {
+	public LocalDateTime getDateTime() {
 		return dateTime;
 	}
 
-	public void setDateTime(Date dateTime) {
+	public void setDateTime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
 	}
 

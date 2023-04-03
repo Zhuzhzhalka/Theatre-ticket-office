@@ -9,15 +9,30 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container" mt-5>
-    <div th:each="el : ${performance}" class="alert alert-info mt-2">
-        <p th:text="'Представление: ' + ${el.getTitle()}"/>
+    <div th:each="perf : ${performance}" class="alert alert-info mt-2">
+        <p th:text="'Представление: ' + ${perf.getTitle()}"/>
+        <div th:each="schedule : ${schedule}" class="alert alert-info mt-2">
+            <a th:href="'/performances/' + ${perf.getId()} + '/' + ${schedule.getId()} + '/add'" class="btn btn-warning">Купить билет</a>
+        </div>
+    </div>
+    <div th:each="el : ${schedule}" class="alert alert-info mt-2">
+        <p th:text="'Театр: ' + ${el.getTheatre().getName()} + '; дата: ' + ${el.getDateTime().format(formatter)}"/>
+        <h6 th:text="'Свободные места'"/>
+        <p th:text="'Партер: ' + ${el.getFreeSeatsGroundFloor()} + '/' + ${el.getTheatre().getSeatsGroundFloor()} + ' (' + ${el.getPriceGroundFloor()} + ' руб.)'"/>
+        <p th:text="'Балкон: ' + ${el.getFreeSeatsBalcony()} + '/' + ${el.getTheatre().getSeatsBalcony()} + ' (' + ${el.getPriceBalcony()} + ' руб.)'"/>
+        <p th:text="'Бельэтаж: ' + ${el.getFreeSeatsMezzanine()} + '/' + ${el.getTheatre().getSeatsMezzanine()} + ' (' + ${el.getPriceMezzanine()} + ' руб.)'"/>
     </div>
     <div th:each="el : ${tickets}" class="alert alert-info mt-2">
         <p th:text="'Имя: ' + ${el.getPersonFirstName()}"/>
         <p th:text="'Фамилия: ' + ${el.getPersonLastName()}"/>
-    </div>
-    <div th:each="el : ${schedule}" class="alert alert-info mt-2">
-        <p th:text="'Театр: ' + ${el.getTheatre().getName()} + '; дата: ' + ${el.getDateTime()}"/>
+        <p th:text="'Место: ' + ${el.getSeat()}"/>
+        <div th:each="perf : ${performance}" class="alert alert-info mt-2">
+            <div th:each="schedule : ${schedule}" class="alert alert-info mt-2">
+                <form th:action="'/performances/' + ${perf.getId()} + '/' + ${schedule.getId()} + '/' + ${el.getId()} + '/remove'" method="post">
+                    <button class="btn btn-warning" type="submit">Удалить билет</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

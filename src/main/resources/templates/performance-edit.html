@@ -15,8 +15,9 @@
             <input type="text" th:value="${el.getTitle()}" name="title" placeholder="Введите название театра" class="form-control">
             <input type="text" th:value="${el.getDuration()}" name="durationString" placeholder="Введите длительность представления" class="form-control">
             <input type="text" th:value="${el.getGenre()}" name="genre" placeholder="Введите жанр представления" class="form-control">
-            <input type="number" th:value="${el.getRating()}" name="rating" placeholder="Введите рейтинг представления" class="form-control">
-            <input type="number" th:value="${el.getDirector()}" name="director_id" placeholder="Введите ID режиссера" class="form-control">
+            <input type="text" th:value="${el.getRating()}" name="ratingString" placeholder="Введите рейтинг представления" class="form-control">
+            <input type="text" th:value="${el.getDirector().getFirstName}" name="directorFirstName" placeholder="Введите фамилию режиссера" class="form-control">
+            <input type="text" th:value="${el.getDirector().getLastName()}" name="directorLastName" placeholder="Введите имя режиссера" class="form-control">
             <button type="submit" class="btn btn-success">Обновить театр</button>
         </form>
     </div>

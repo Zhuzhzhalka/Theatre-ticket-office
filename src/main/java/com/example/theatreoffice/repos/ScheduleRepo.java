@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.example.theatreoffice.models.Schedule;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -16,4 +17,5 @@ public interface ScheduleRepo extends CrudRepository<Schedule, Long> {
     List<Schedule> findByFreeSeatsBalconyGreaterThanEqual(int freeSeatsBalcony);
     List<Schedule> findByFreeSeatsGroundFloorGreaterThanEqual(int freeSeatsGroundFloor);
     List<Schedule> findByFreeSeatsMezzanineGreaterThanEqual(int freeSeatsMezzanine);
+    List<Schedule> findByDateTimeBetween(LocalDateTime dateStart, LocalDateTime dateEnd);
 }

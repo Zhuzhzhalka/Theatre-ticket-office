@@ -24,7 +24,8 @@
         </form>
     </div>
     <div th:each="el : ${schedule}" class="alert alert-info mt-2">
-        <p th:text="'Представление: ' + ${el.getPerformance().getTitle()} + '; дата: ' + ${el.getDateTime()}"/>
+        <p th:text="'Представление: ' + ${el.getPerformance().getTitle()} + '; дата: ' + ${el.getDateTime().format(formatter)}"/>
+        <a th:href="'/performances/' + ${el.getPerformance().getId()} + '/' + ${el.getId()}" class="btn btn-warning">Перейти</a>
     </div>
 </div>
 

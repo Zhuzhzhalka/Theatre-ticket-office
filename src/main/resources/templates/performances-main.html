@@ -10,11 +10,37 @@
 
 <div class="container" mt-5>
     <h1>Список представлений</h1>
+    <form th:action="@{/performances}" th:object="${filter}" method="post">
+        <div class="col-md-6 form-group">
+            <p>Сортировка</p>
+            <select class="form-control" th:field="*{genreSelected}">
+                <option th:value="''">Выберите жанр</option>
+                <option th:each="genre : ${genresAvailable}" th:value="${genre}" th:text="${genre}"></option>
+            </select>
+            <select class="form-control" th:field="*{theatreNameSelected}">
+                <option th:value="''">Выберите театр</option>
+                <option th:each="theatre : ${theatres}" th:value="${theatre.getName()}" th:text="${theatre.getName()}"></option>
+            </select>
+            <select class="form-control" th:field="*{ratingSortType}">
+                <option th:value="''">Выберите сортировку по рейтингу</option>
+                <option th:value="desc" th:text="'по убыванию'"></option>
+                <option th:value="asc" th:text="'по возрастанию'"></option>
+            </select>
+        </div>
+        <div class="col-md-6 form-group">
+            <input th:type="text" th:field="*{titleSearched}" th:name="title" th:placeholder="'Введите название представления'" class="form-control">
+            <input th:type="text" th:field="*{dateStart}" th:name="dateStart" th:placeholder="'Введите начальную дату'" class="form-control">
+            <input th:type="text" th:field="*{dateEnd}" th:name="dateEnd" th:placeholder="'Введите конечную дату'" class="form-control">
+            <input th:type="text" th:field="*{directorSearched}" th:name="directorSearched" th:placeholder="'Введите фамилию и имя режиссера'" class="form-control">
+            <input th:type="text" th:field="*{actorSearched}" th:name="actorSearched" th:placeholder="'Введите фамилию и имя артиста'" class="form-control">
+        </div>
+        <p><input th:type="submit" th:value="Submit" /> <input th:type="reset" th:value="Reset" /></p>
+    </form>
     <a th:href="'/performances/add'" class="btn btn-warning">Добавить представление</a>
     <div th:each="el : ${performances}" class="alert alert-info mt-2">
         <h3 th:text="${el.getTitle()}"/>
         <p th:text="'рейтинг: ' + ${el.getRating()}"/>
-        <a th:href="'/performances/' + ${el.id}" class="btn btn-warning">Детали</a>
+        <a th:href="'/performances/' + ${el.getId()}" class="btn btn-warning">Детали</a>
     </div>
 </div>
 

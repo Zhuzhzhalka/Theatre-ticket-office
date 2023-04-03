@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,7 +48,8 @@ public class PerformanceDAOTest {
         Optional<Participant> directorOpt = participantDAO.getParticipantById(1);
         Assertions.assertTrue(directorOpt.isPresent());
         Participant director = directorOpt.get();
-        Performance performanceExpected = new Performance("Три богатыря", duration, "Мюзикл", 9.1, director);
+        BigDecimal rating = new BigDecimal("9.1");
+        Performance performanceExpected = new Performance("Три богатыря", duration, "Мюзикл", rating, director);
         performanceDAO.save(performanceExpected);
 
         List<Performance> performancesGot = performanceDAO.getPerformanceByTitle("Три богатыря");
@@ -59,28 +61,22 @@ public class PerformanceDAOTest {
     }
 
     @Test
-    public void testGetPerformanceByGenres() {
-        Collection<String> genres = new ArrayList<>();
-        genres.add("Оперетта");
-        genres.add("Опера");
+    public void testGetPerformanceByGenre() {
+        String genre = "Опера";
 
         LocalTime duration = LocalTime.parse("01:00:00");
         Optional<Participant> directorOpt = participantDAO.getParticipantById(1);
         Assertions.assertTrue(directorOpt.isPresent());
         Participant director = directorOpt.get();
-        Performance performance1 = new Performance("Три богатыря", duration, "Опера", 9.1, director);
-        Performance performance2 = new Performance("ОК", duration, "Оперетта", 5.1, director);
-        List<Performance> performancesExpected = new ArrayList<>();
-        performancesExpected.add(performance1);
-        performancesExpected.add(performance2);
-        performanceDAO.save(performance1);
-        performanceDAO.save(performance2);
+        BigDecimal rating = new BigDecimal("9.1");
+        Performance performanceExpected = new Performance("Три богатыря", duration, "Опера", rating, director);
+        performanceDAO.save(performanceExpected);
 
-        List<Performance> performancesGot = performanceDAO.getPerformancesByGenres(genres);
-        Assertions.assertEquals(performancesExpected, performancesGot);
+        List<Performance> performancesGot = performanceDAO.getPerformancesByGenre(genre);
+        Assertions.assertEquals(1, performancesGot.size());
+        Assertions.assertEquals(performanceExpected, performancesGot.get(0));
 
-        performanceDAO.delete(performance1);
-        performanceDAO.delete(performance2);
+        performanceDAO.delete(performanceExpected);
     }
 
     @Test
@@ -108,7 +104,8 @@ public class PerformanceDAOTest {
         Optional<Participant> directorOpt = participantDAO.getParticipantById(1);
         Assertions.assertTrue(directorOpt.isPresent());
         Participant director = directorOpt.get();
-        Performance performanceExpected = new Performance("Три богатыря", duration, "Опера", 9.1, director);
+        BigDecimal rating = new BigDecimal("9.1");
+        Performance performanceExpected = new Performance("Три богатыря", duration, "Опера", rating, director);
         performanceDAO.save(performanceExpected);
 
         Optional<Performance> somethingGot = performanceDAO.getPerformanceById(performanceExpected.getId());

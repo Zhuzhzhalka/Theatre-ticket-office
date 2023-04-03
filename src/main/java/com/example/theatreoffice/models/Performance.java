@@ -1,5 +1,6 @@
 package com.example.theatreoffice.models;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 
 import jakarta.persistence.*;
@@ -25,7 +26,7 @@ public class Performance {
 	private String genre;
 	
 	@Column(name = "rating")
-	private double rating;
+	private BigDecimal rating;
 
 	@OneToOne(targetEntity = Participant.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "director")
@@ -33,7 +34,7 @@ public class Performance {
 	
 	public Performance() {}
 	
-	public Performance(String title, LocalTime duration, String genre, double rating, Participant director) {
+	public Performance(String title, LocalTime duration, String genre, BigDecimal rating, Participant director) {
 		this.title = title;
 		this.duration = duration;
 		this.genre = genre;
@@ -73,11 +74,11 @@ public class Performance {
 		this.genre = genre;
 	}
 
-	public double getRating() {
+	public BigDecimal getRating() {
 		return rating;
 	}
 
-	public void setRating(double rating) {
+	public void setRating(BigDecimal rating) {
 		this.rating = rating;
 	}
 

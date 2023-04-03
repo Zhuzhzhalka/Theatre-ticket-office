@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+
+<div class="container" mt-5>
+    <h1>Добавление расписания для представления</h1>
+    <div th:each="perf : ${performance}" class="alert alert-info mt-2">
+        <form th:action="'/performances/' + ${perf.getId()} +'/add_schedule'" method="post">
+            <input type="text" name="theatreName" placeholder="Введите название театра" class="form-control">
+            <input type="text" name="countryTheatre" placeholder="Введите страну театра" class="form-control">
+            <input type="text" name="townTheatre" placeholder="Введите город театра" class="form-control">
+            <input type="text" name="dateString" placeholder="Введите дату" class="form-control">
+            <input type="number" name="priceGroundFloor" placeholder="Введите цену на места (партер))" class="form-control">
+            <input type="number" name="priceBalcony" placeholder="Введите цену на места (балкон))" class="form-control">
+            <input type="number" name="priceMezzanine" placeholder="Введите цену на места (бельэтаж)" class="form-control">
+            <button type="submit" class="btn btn-success">Добавить расписание</button>
+        </form>
+    </div>
+</div>
+
+<div th:insert="blocks/footer :: footer"></div>
+
+</body>
+</html>
