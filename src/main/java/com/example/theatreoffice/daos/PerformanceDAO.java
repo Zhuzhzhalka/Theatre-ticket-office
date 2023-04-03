@@ -3,7 +3,6 @@ package com.example.theatreoffice.daos;
 import com.example.theatreoffice.models.Participant;
 import com.example.theatreoffice.models.Performance;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
