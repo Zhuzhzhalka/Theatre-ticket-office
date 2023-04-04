@@ -20,7 +20,7 @@
 		<p><input th:type="submit" th:value="Submit" /> <input th:type="reset" th:value="Reset" /></p>
 	</form>
 	<a th:href="'/theatres/add'" class="btn btn-warning">Добавить театр</a>
-	<div th:each="el : ${theatres}" class="alert alert-info mt-2">
+	<div th:each="el : ${theatres}" class="alert alert-info mt-2" th:name="theatres">
 		<h3 th:text="${el.getName()}"/>
 		<p th:text="'дом: ' + ${el.getBuilding()}"/>
 		<p th:text="'улица: ' + ${el.getStreet()}"/>

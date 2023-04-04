@@ -150,8 +150,6 @@ public class PerformanceController {
         String directorSearched = filter.getDirectorSearched();
         String actorSearched = filter.getActorSearched();
 
-        // TODO: combine genre and theatre sorting
-
         if (!titleSearched.isEmpty() && !genreSelected.isEmpty()) {
             performances = performanceDAO.getPerformancesByTitleAndGenre(titleSearched, genreSelected);
         } else if (!titleSearched.isEmpty()) {

@@ -24,7 +24,7 @@
     <div th:each="el : ${participances}" class="alert alert-info mt-2">
         <p th:text="${el.getParticipant().getFirstName()} + ' ' + ${el.getParticipant().getLastName()} + ' -- ' + ${el.getRole()}"/>
     </div>
-    <div th:each="el : ${schedule}" class="alert alert-info mt-2">
+    <div th:each="el : ${schedule}" class="alert alert-info mt-2" th:name="schedule">
         <p th:text="'Театр: ' + ${el.getTheatre().getName()} + '; дата: ' + ${el.getDateTime().format(formatter)}"/>
         <a th:href="@{/performances/{perfId}/{schedId}(perfId=${el.getPerformance().getId()}, schedId=${el.getId()} )}" class="btn btn-primary my-2">Билеты</a>
     </div>

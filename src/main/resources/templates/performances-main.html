@@ -10,10 +10,10 @@
 
 <div class="container" mt-5>
     <h1>Список представлений</h1>
-    <form th:action="@{/performances}" th:object="${filter}" method="post">
+    <form th:action="@{/performances}" th:object="${filter}" method="post" name="sort">
         <div class="col-md-6 form-group">
             <p>Сортировка</p>
-            <select class="form-control" th:field="*{genreSelected}">
+            <select class="form-control" th:field="*{genreSelected}" name="drpGenre">
                 <option th:value="''">Выберите жанр</option>
                 <option th:each="genre : ${genresAvailable}" th:value="${genre}" th:text="${genre}"></option>
             </select>
@@ -37,7 +37,7 @@
         <p><input th:type="submit" th:value="Submit" /> <input th:type="reset" th:value="Reset" /></p>
     </form>
     <a th:href="'/performances/add'" class="btn btn-warning">Добавить представление</a>
-    <div th:each="el : ${performances}" class="alert alert-info mt-2">
+    <div th:each="el : ${performances}" class="alert alert-info mt-2" th:name="perfs">
         <h3 th:text="${el.getTitle()}"/>
         <p th:text="'рейтинг: ' + ${el.getRating()}"/>
         <a th:href="'/performances/' + ${el.getId()}" class="btn btn-warning">Детали</a>
