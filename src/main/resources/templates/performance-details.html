@@ -15,7 +15,7 @@
         <p th:text="'жанр: ' + ${el.getGenre()}"/>
         <p th:text="'рейтинг: ' + ${el.getRating()}"/>
         <p th:text="'Режиссер: ' + ${el.getDirector().getFirstName()} + ' ' + ${el.getDirector().getLastName()}"/>
-        <a th:href="'/performances/' + ${el.getId()} + '/edit'" class="btn btn-warning">Редактировать</a>
+        <a th:href="'/performances/' + ${el.getId()} + '/edit'" class="btn btn-warning" th:name="editBtn">Редактировать</a>
         <form th:action="'/performances/' + ${el.getId()} +'/remove'" method="post">
             <button class="btn btn-warning" type="submit">Удалить</button>
         </form>

@@ -37,7 +37,7 @@ public class TheatreOfficeSeleniumTests {
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
     }
 
-    @Test
+    @Test(priority = 0)
     public void testHomeAndPerformanceDetails() {
         driver.get(URL);
 
@@ -63,7 +63,7 @@ public class TheatreOfficeSeleniumTests {
         Assert.assertEquals(driver.findElement(By.xpath("//p[contains(text(), 'Театр')]")).getText(), "Театр: Красноярский театр кукол; дата: 19:00 25-10-2020");
 
     }
-    @Test
+    @Test(priority = 1)
     public void testTheatres() {
         driver.get(URL);
 
@@ -96,7 +96,7 @@ public class TheatreOfficeSeleniumTests {
         Assert.assertEquals(theatreElement.findElement(By.cssSelector("h3")).getText(), "Молодежный театр");
     }
 
-    @Test
+    @Test(priority = 2)
     public void testPerformances() {
         driver.get(URL);
 
@@ -128,7 +128,7 @@ public class TheatreOfficeSeleniumTests {
         Assert.assertEquals(comedyPerformance.findElement(By.cssSelector("a[href='/performances/9']")).getText(), "Детали");
     }
 
-    @Test
+    @Test(priority = 3)
     public void testTickets() {
         driver.get(URL);
 
@@ -169,6 +169,129 @@ public class TheatreOfficeSeleniumTests {
 
         scheduleElement = driver.findElement(By.name("schedule"));
         Assert.assertEquals(scheduleElement.findElement(By.xpath("//p[contains(text(), 'Партер')]")).getText(), "Партер: 99/100 (100 руб.)");
+    }
+
+    @Test(priority = 4)
+    public void testEditTheatre() {
+        driver.get(URL);
+
+        WebElement button = driver.findElement(By.xpath("//a[@href='/theatres']"));
+        button.click();
+        wait.until(stalenessOf(button));
+
+        List<WebElement> allDivElements = driver.findElements(By.name("theatres"));
+        WebElement theatreElement = allDivElements.get(0);
+        button = theatreElement.findElement(By.cssSelector("a"));
+        button.click();
+        wait.until(stalenessOf(button));
+
+        Assert.assertEquals(driver.getTitle(), "Театр");
+
+        WebElement theatreInfo = driver.findElements(By.cssSelector("div")).get(2);
+        button = theatreInfo.findElement(By.cssSelector("a"));
+        button.click();
+        wait.until(stalenessOf(button));
+
+        Assert.assertEquals(driver.getTitle(), "Редактирование театра");
+
+        List<WebElement> inputFields = driver.findElements(By.cssSelector("input"));
+        String testTheatreName = "Новый";
+        String testGroundSeats = "123";
+        String testBalconySeats = "456";
+        String testMezzanineSeats = "78";
+        String testBuilding = "45";
+        String testStreet = "Новая";
+        String testTown = "Новгород";
+        String testCountry = "Россия";
+        inputFields.get(0).clear();
+        inputFields.get(1).clear();
+        inputFields.get(2).clear();
+        inputFields.get(3).clear();
+        inputFields.get(4).clear();
+        inputFields.get(5).clear();
+        inputFields.get(6).clear();
+        inputFields.get(7).clear();
+        inputFields.get(0).sendKeys(testTheatreName);
+        inputFields.get(1).sendKeys(testGroundSeats);
+        inputFields.get(2).sendKeys(testBalconySeats);
+        inputFields.get(3).sendKeys(testMezzanineSeats);
+        inputFields.get(4).sendKeys(testBuilding);
+        inputFields.get(5).sendKeys(testStreet);
+        inputFields.get(6).sendKeys(testTown);
+        inputFields.get(7).sendKeys(testCountry);
+
+        WebElement submitBtn = driver.findElement(By.cssSelector("button"));
+        submitBtn.submit();
+        wait.until(stalenessOf(submitBtn));
+
+        Assert.assertEquals(driver.getTitle(), "Театр");
+
+        theatreInfo = driver.findElements(By.cssSelector("div")).get(2);
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(), "Новый");
+        Assert.assertEquals(theatreInfo.findElement(By.xpath("//p[contains(text(), 'дом')]")).getText(), "дом: 45");
+        Assert.assertEquals(theatreInfo.findElement(By.xpath("//p[contains(text(), 'улица')]")).getText(), "улица: Новая");
+        Assert.assertEquals(theatreInfo.findElement(By.xpath("//p[contains(text(), 'город')]")).getText(), "город: Новгород");
+        Assert.assertEquals(theatreInfo.findElement(By.xpath("//p[contains(text(), 'страна')]")).getText(), "страна: Россия");
+        Assert.assertEquals(theatreInfo.findElement(By.xpath("//p[contains(text(), 'Партер')]")).getText(), "Партер: 123");
+        Assert.assertEquals(theatreInfo.findElement(By.xpath("//p[contains(text(), 'Балкон')]")).getText(), "Балкон: 456");
+        Assert.assertEquals(theatreInfo.findElement(By.xpath("//p[contains(text(), 'Бельэтаж')]")).getText(), "Бельэтаж: 78");
+    }
+
+    @Test(priority = 5)
+    public void testEditPerformance() {
+        driver.get(URL);
+
+        WebElement button = driver.findElement(By.xpath("//a[@href='/performances']"));
+        button.click();
+        wait.until(stalenessOf(button));
+
+        List<WebElement> allDivElements = driver.findElements(By.name("perfs"));
+        WebElement theatreElement = allDivElements.get(0);
+        button = theatreElement.findElement(By.cssSelector("a"));
+        button.click();
+        wait.until(stalenessOf(button));
+
+        Assert.assertEquals(driver.getTitle(), "Представление");
+
+        WebElement perfInfo = driver.findElements(By.cssSelector("div")).get(2);
+        button = perfInfo.findElement(By.name("editBtn"));
+        button.click();
+        wait.until(stalenessOf(button));
+
+        Assert.assertEquals(driver.getTitle(), "Редактирование представления");
+
+        List<WebElement> inputFields = driver.findElements(By.cssSelector("input"));
+        String testPerfTitle = "Тесто";
+        String testDuration = "01:01";
+        String testGenre = "Комедия";
+        String testRating = "9.9";
+        String testDirFN = "Тестов";
+        String testDirLN = "Тест";
+        inputFields.get(0).clear();
+        inputFields.get(1).clear();
+        inputFields.get(2).clear();
+        inputFields.get(3).clear();
+        inputFields.get(4).clear();
+        inputFields.get(5).clear();
+        inputFields.get(0).sendKeys(testPerfTitle);
+        inputFields.get(1).sendKeys(testDuration);
+        inputFields.get(2).sendKeys(testGenre);
+        inputFields.get(3).sendKeys(testRating);
+        inputFields.get(4).sendKeys(testDirFN);
+        inputFields.get(5).sendKeys(testDirLN);
+
+        WebElement submitBtn = driver.findElement(By.cssSelector("button"));
+        submitBtn.submit();
+        wait.until(stalenessOf(submitBtn));
+
+        perfInfo = driver.findElements(By.cssSelector("div")).get(2);
+
+        Assert.assertEquals(perfInfo.findElement(By.cssSelector("h3")).getText(), "Тесто");
+        Assert.assertEquals(perfInfo.findElement(By.xpath("//p[contains(text(), 'длительность')]")).getText(), "длительность: 01:01");
+        Assert.assertEquals(perfInfo.findElement(By.xpath("//p[contains(text(), 'жанр')]")).getText(), "жанр: Комедия");
+        Assert.assertEquals(perfInfo.findElement(By.xpath("//p[contains(text(), 'рейтинг')]")).getText(), "рейтинг: 9.9");
+        Assert.assertEquals(perfInfo.findElement(By.xpath("//p[contains(text(), 'Режиссер')]")).getText(), "Режиссер: Тестов Тест");
     }
 
     @AfterClass

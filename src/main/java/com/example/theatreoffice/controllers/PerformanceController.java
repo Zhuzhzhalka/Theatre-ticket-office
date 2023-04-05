@@ -303,13 +303,15 @@ public class PerformanceController {
         if (directorOpt.isEmpty()) {
             director = new Participant(directorFirstName, directorLastName);
             participantDAO.save(director);
-            performance.setDirector(director);
+        } else {
+            director = directorOpt.get();
         }
 
         performance.setTitle(title);
         performance.setDuration(duration);
         performance.setGenre(genre);
         performance.setRating(rating);
+        performance.setDirector(director);
         performanceDAO.save(performance);
 
         return "redirect:/performances/{id}";

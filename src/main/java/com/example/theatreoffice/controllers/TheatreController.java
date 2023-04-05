@@ -142,11 +142,16 @@ public class TheatreController {
 	}
 
 	@PostMapping("/theatres/add")
-	public String theatresAdd(@RequestParam String name, @RequestParam int seatsGroundFloor,
-								  @RequestParam int seatsBalcony, @RequestParam int seatsMezzanine,
-								  @RequestParam int building, @RequestParam String street,
+	public String theatresAdd(@RequestParam String name, @RequestParam String seatsGroundFloor,
+								  @RequestParam String seatsBalcony, @RequestParam String seatsMezzanine,
+								  @RequestParam String building, @RequestParam String street,
 								  @RequestParam String town, @RequestParam String country, Model model) {
-		Theatre theatre = new Theatre(name, seatsGroundFloor, seatsBalcony, seatsMezzanine, building, street, town, country);
+		int buildingInt = Integer.parseInt(building);
+		int seatsGroundFloorInt = Integer.parseInt(seatsGroundFloor);
+		int seatsBalconyInt = Integer.parseInt(seatsBalcony);
+		int seatsMezzanineInt = Integer.parseInt(seatsMezzanine);
+
+		Theatre theatre = new Theatre(name, seatsGroundFloorInt, seatsBalconyInt, seatsMezzanineInt, buildingInt, street, town, country);
 		theatreDAO.save(theatre);
 
 		return "redirect:/theatres";
@@ -183,21 +188,26 @@ public class TheatreController {
 
 	@PostMapping("/theatres/{id}/edit")
 	public String theatreUpdate(@PathVariable(value = "id") long id,
-								@RequestParam String name, @RequestParam int seatsGroundFloor,
-								@RequestParam int seatsBalcony, @RequestParam int seatsMezzanine,
-								@RequestParam int building, @RequestParam String street,
+								@RequestParam String name, @RequestParam String seatsGroundFloor,
+								@RequestParam String seatsBalcony, @RequestParam String seatsMezzanine,
+								@RequestParam String building, @RequestParam String street,
 								@RequestParam String town, @RequestParam String country, Model model) {
 		Theatre theatre = theatreDAO.getTheatreById(id).orElseThrow();
 
-		theatre.setBuilding(building);
+		int buildingInt = Integer.parseInt(building);
+		int seatsGroundFloorInt = Integer.parseInt(seatsGroundFloor);
+		int seatsBalconyInt = Integer.parseInt(seatsBalcony);
+		int seatsMezzanineInt = Integer.parseInt(seatsMezzanine);
+
+		theatre.setBuilding(buildingInt);
 		theatre.setStreet(street);
 		theatre.setTown(town);
 		theatre.setCountry(country);
 
 		theatre.setName(name);
-		theatre.setSeatsGroundFloor(seatsGroundFloor);
-		theatre.setSeatsBalcony(seatsBalcony);
-		theatre.setSeatsMezzanine(seatsMezzanine);
+		theatre.setSeatsGroundFloor(seatsGroundFloorInt);
+		theatre.setSeatsBalcony(seatsBalconyInt);
+		theatre.setSeatsMezzanine(seatsMezzanineInt);
 		theatreDAO.save(theatre);
 
 		return "redirect:/theatres/{id}";
